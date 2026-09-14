@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bossnu Codex — Puter AI</title>
+<script src="https://js.puter.com/v2/"></script>
+<style>
+:root{--bg:#0b0f1a;--card:#1a2236;--accent:#8b5cf6;--text:#e2e8f0;--muted:#94a3b8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+header{padding:1rem 1.25rem;border-bottom:1px solid rgba(139,92,246,.3);display:flex;align-items:center;gap:.75rem}
+header h1{font-size:1.1rem}
+.badge{background:var(--accent);color:#fff;font-size:.65rem;padding:.15rem .5rem;border-radius:999px}
+main{flex:1;display:flex;flex-direction:column;max-width:720px;width:100%;margin:0 auto;padding:1rem}
+#log{flex:1;overflow:auto;display:flex;flex-direction:column;gap:.75rem;padding-bottom:1rem}
+.msg{padding:.85rem 1rem;border-radius:.75rem;line-height:1.5;font-size:.95rem}
+.msg.bot{background:var(--card);align-self:flex-start;border:1px solid rgba(139,92,246,.25)}
+.msg.user{background:linear-gradient(135deg,#6d28d9,#4f46e5);align-self:flex-end}
+.row{display:flex;gap:.5rem}
+input{flex:1;padding:.75rem 1rem;border-radius:.75rem;border:1px solid rgba(139,92,246,.3);background:var(--card);color:var(--text);outline:none}
+button{padding:.75rem 1.1rem;border:none;border-radius:.75rem;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+button:disabled{opacity:.5}
+.links{padding:.5rem 0;font-size:.8rem;color:var(--muted)}
+.links a{color:#a78bfa}
+</style>
+</head>
+<body>
+<header>
+  <h1>👑 Bossnu Codex</h1>
+  <span class="badge">Puter Free</span>
+</header>
+<main>
+  <div class="links">
+    <a href="groq-puter-clone.html">Groq-style page</a> ·
+    <a href="bossnu-e2e-agent.html">E2E Tools</a>
+  </div>
+  <div id="log">
+    <div class="msg bot">สวัสดีครับ — Bossnu Codex พร้อมใช้งาน<br>ใช้โมเดลฟรีผ่าน Puter ทั้งหมด พิมพ์ข้อความได้เลย</div>
+  </div>
+  <div class="row">
+    <input id="q" placeholder="พิมพ์ข้อความ..." autocomplete="off"/>
+    <button id="go">ส่ง</button>
+  </div>
+</main>
+<script>
+const MODELS=["google/gemma-4-31b-it:free","meta-llama/llama-3.3-70b-instruct:free","nvidia/nemotron-3.5-lightning:free","google/gemma-4-26b-a4b-it:free"];
+const log=document.getElementById("log");
+const q=document.getElementById("q");
+const go=document.getElementById("go");
+function add(role,text){const d=document.createElement("div");d.className="msg "+role;d.innerHTML=text;log.appendChild(d);log.scrollTop=log.scrollHeight}
+async function send(){
+  const t=q.value.trim();if(!t)return;q.value="";add("user",t);go.disabled=true;
+  add("bot","กำลังคิด...");
+  const typing=log.lastChild;
+  let ok=false;
+  for(const m of MODELS){
+    try{
+      const r=await puter.ai.chat([{role:"system",content:"คุณคือ Bossnu Codex ตอบภาษาไทย สุภาพ ชัดเจน"},{role:"user",content:t}],{model:m});
+      const text=typeof r==="string"?r:(r?.message?.content||r?.text||JSON.stringify(r));
+      typing.innerHTML=text+"<br><small style=opacity:.6>"+m.split("/").pop()+"</small>";
+      ok=true;break;
+    }catch(e){console.warn(m,e)}
+  }
+  if(!ok)typing.textContent="โมเดลฟรีติดขัด ลองใหม่ภายหลัง";
+  go.disabled=false;q.focus();
+}
+go.onclick=send;q.onkeydown=e=>{if(e.key==="Enter")send()};
+</script>
+</body>
+</html>
