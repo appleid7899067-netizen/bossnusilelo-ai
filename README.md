@@ -1,15 +1,5 @@
-# Bossnu Codex / Bossnusilelo AI
+# Bossnu Codex Build Mode
 
-Static AI apps powered by **Puter** free models.
+Groq-inspired UI · Puter free strong models · Mobile-first
 
-## Live entry points
-- `/` or `index.html` — Chat + Code Runner
-- `groq-puter-clone.html` — Groq-style landing + live chat
-- `bossnu-e2e-agent.html` — E2E tool calling demo
-
-## Deploy on Netlify
-1. Import this repo in Netlify
-2. Publish directory: `.` (root)
-3. No build command needed
-
-Or drag the folder to https://app.netlify.com/drop
+Open `index.html` or deploy to Netlify.
