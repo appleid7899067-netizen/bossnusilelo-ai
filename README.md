@@ -1,11 +1,15 @@
-# Bossnusilelo AI
+# Bossnu Codex / Bossnusilelo AI
 
-AI Chat + Code Runner + E2E Tool Calling  
-ใช้โมเดลฟรีผ่าน Puter.js
+Static AI apps powered by **Puter** free models.
 
-## ไฟล์หลัก
-- `index.html` — แชท + รันโค้ด + แนบรูป
-- `bossnu-e2e-agent.html` — E2E Tool Calling จริง
+## Live entry points
+- `/` or `index.html` — Chat + Code Runner
+- `groq-puter-clone.html` — Groq-style landing + live chat
+- `bossnu-e2e-agent.html` — E2E tool calling demo
 
-## Deploy
-เปิด `index.html` หรือใช้ Netlify / GitHub Pages
+## Deploy on Netlify
+1. Import this repo in Netlify
+2. Publish directory: `.` (root)
+3. No build command needed
+
+Or drag the folder to https://app.netlify.com/drop
